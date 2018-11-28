@@ -84,7 +84,7 @@
           controlUI.style.marginLeft = '5px';
           controlUI.style.marginBottom = '10px';
           controlUI.style.textAlign = 'center';
-          controlUI.title = 'Нажмите, чтобы изменить режим прокрутки карты';
+          controlUI.title = 'Изменить режим прокрутки';
           controlDiv.appendChild(controlUI);
 
           var controlText = document.createElement('div');
@@ -101,6 +101,8 @@
           controlUI.addEventListener('click', function() {
             map.setOptions({gestureHandling: 'greedy'})
           });
+        
+        };
    
         var scrollControlDiv = document.createElement('div');
         var scrollControl = new ScrollControl(scrollControlDiv, map);
@@ -108,7 +110,6 @@
         scrollControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(scrollControlDiv);
 
-      }
       }
     </script>
 
