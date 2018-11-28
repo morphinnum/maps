@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>gonio map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 70%;
+        width: 70%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .gm-style-mtc, .gm-svpc, .gm-fullscreen-control {
+        display: none;
+      }
+
+      #content {
+        width: 200px;
+      }
+
+    </style>
+
+
+  </head>
+  <body>
+
+    <div id="map"></div>
+
+    <script>
+      var map;
+      function initMap() {
+
+        var coordinates = {lat: 41.573580, lng: 41.572500},
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: coordinates,
+          zoom: 12,
+          gestureHandling: 'cooperative'
+        });
+
+        var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAA7CAYAAAF6TijzAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjMzM0M0MjYxNDFDNTExRTVCN0NBQjJCOTU4M0Q0NjIyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjMzM0M0MjYyNDFDNTExRTVCN0NBQjJCOTU4M0Q0NjIyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzMzQzQyNUY0MUM1MTFFNUI3Q0FCMkI5NTgzRDQ2MjIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzMzQzQyNjA0MUM1MTFFNUI3Q0FCMkI5NTgzRDQ2MjIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6gudL/AAAIoUlEQVR42mJg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";
+        var marker = new google.maps.Marker({
+          position: coordinates,
+          map: map,
+          icon: img,
+          title: 'Крепость Гонио'
+        });
+
+        var popupContent = '<div id="content">'+
+        '<h3>Крепость Гонио</h3>'+
+        '<p>А также: <a href="https://georgia-index.com/dostoprimechatelnosti-batumi-gruziya/">'+
+        'Достопримечательности Батуми Грузия</a> '+
+        '</div>'+
+        '</div>';
+
+
+        var infowindow = new google.maps.InfoWindow({
+            content: popupContent
+        });
+        
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+        
+
+        function ScrollControl(controlDiv, map) {
+
+          var controlUI = document.createElement('div');
+          controlUI.style.backgroundColor = '#fff';
+          controlUI.style.border = '2px solid #fff';
+          controlUI.style.borderRadius = '3px';
+          controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+          controlUI.style.cursor = 'pointer';
+          controlUI.style.marginLeft = '5px';
+          controlUI.style.marginBottom = '10px';
+          controlUI.style.textAlign = 'center';
+          controlUI.title = 'Нажмите, чтобы изменить режим прокрутки карты';
+          controlDiv.appendChild(controlUI);
+
+          var controlText = document.createElement('div');
+          controlText.style.color = 'rgb(25,25,25)';
+          controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+          controlText.style.fontSize = '14px';
+          controlText.style.lineHeight = '28px';
+          controlText.style.paddingLeft = '5px';
+          controlText.style.paddingRight = '5px';
+          controlText.innerHTML = 'Click';
+          controlUI.appendChild(controlText);
+          
+
+          controlUI.addEventListener('click', function() {
+            map.setOptions({gestureHandling: 'greedy'})
+          });
+   
+        var scrollControlDiv = document.createElement('div');
+        var scrollControl = new ScrollControl(scrollControlDiv, map);
+
+        scrollControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(scrollControlDiv);
+
+      }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtnQ3MSboCk0EeVi575fO7nzL528JWk2E&callback=initMap"
+    async defer></script>
+  </body>
+</html>
